@@ -22,7 +22,7 @@ func main() {
 	}
 
 	//init git project
-	InitGitPro(gConfig)
+	InitGitPro(gConfig, &gConfig.remoteBranchName)
 
 	//start file change monitor
 	startMonitor()

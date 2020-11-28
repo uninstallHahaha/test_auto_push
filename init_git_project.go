@@ -8,7 +8,7 @@ import (
 )
 
 // InitGitPro ...
-func InitGitPro(gConfig GitConfig) {
+func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 
 	//init user info
 	fmt.Print("Initing git user info.")
@@ -17,15 +17,15 @@ func InitGitPro(gConfig GitConfig) {
 	tc1.StopTicker()
 	if gConfig.gitUsername != "" {
 		ExecCommand("git config --global user.name \"" + gConfig.gitUsername + "\"")
-		fmt.Printf(">>>[git config username]\n")
+		fmt.Println(">>>[git config username]")
 	}
 	if gConfig.gitPassword != "" {
 		ExecCommand("git config --global user.password \"" + gConfig.gitPassword + "\"")
-		fmt.Printf(">>>[git config password]\n")
+		fmt.Println(">>>[git config password]")
 	}
 	if gConfig.gitUserEmail != "" {
 		ExecCommand("git config --global user.email \"" + gConfig.gitUserEmail + "\"")
-		fmt.Printf(">>>[git config email]\n")
+		fmt.Println(">>>[git config email]")
 	}
 
 	//init git project
@@ -49,25 +49,44 @@ func InitGitPro(gConfig GitConfig) {
 		//init git project
 		fmt.Println(">>>[git init]")
 		res = ExecCommand("git init")
-		// fmt.Println(res)
+		// add remote address
 		fmt.Println(">>>[git remote add origin " + gConfig.remoteStoreAddress + "]")
 		res = ExecCommand("git remote add origin " + gConfig.remoteStoreAddress)
-		// fmt.Println(res)
+		// add local branch
 		fmt.Println(">>>[git branch " + gConfig.localBranchName + "]")
 		res = ExecCommand("git branch " + gConfig.localBranchName)
-		// fmt.Println(res)
+		// switch to local branch
 		fmt.Println(">>>[git checkout " + gConfig.localBranchName + "]")
 		res = ExecCommand("git checkout " + gConfig.localBranchName)
-		// fmt.Println(res)
+		// add work file to index
 		fmt.Println(">>>[git add .]")
 		res = ExecCommand("git add .")
-		// fmt.Println(res)
+		// add index to local repository
 		fmt.Println(">>>[git commit -m " + gConfig.commitPrefix + time.Now().Format("2006_01_02#15:04:05") + "]")
 		res = ExecCommand("git commit -m " + gConfig.commitPrefix + time.Now().Format("2006_01_02#15:04:05"))
-		// fmt.Println(res)
-		fmt.Println(">>>[git push -u origin " + gConfig.localBranchName + "]")
-		res = ExecCommand("git push -u origin " + gConfig.localBranchName)
-		// fmt.Println(res)
+		// get remote branchs
+		fmt.Println(">>>[git fetch]")
+		res = ExecCommand("git fetch")
+		// update binding remote branch
+		if gConfig.forceRecover == "0" {
+			var isc bool
+			for {
+				res := ExecCommand("git branch -a")
+				if isc = strings.Contains(res, "remotes/origin/"+*remoteBranchName); isc {
+					*remoteBranchName = *remoteBranchName + "1"
+				} else {
+					//update config file
+					UpdateConfigFile("remote_branch_name", *remoteBranchName)
+					break
+				}
+			}
+		}
+		// push local repository to remote
+		fmt.Println(">>>[git push -u origin " + *remoteBranchName + " " + gConfig.localBranchName + " --force]")
+		res = ExecCommand("git push -u origin " + *remoteBranchName + " " + gConfig.localBranchName + " --force")
+		// bind local branch with remote branch
+		fmt.Println(">>>[git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName + "]")
+		res = ExecCommand("git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName)
 		fmt.Println("Initing git project is done, now your local files is connecting with your git store")
 	} else {
 		//For the case: user does not start saveMan, and he change his file, when he starts saveMan, we should git push to sync files
@@ -76,8 +95,7 @@ func InitGitPro(gConfig GitConfig) {
 		go tc.StartTicker()
 		res = ExecCommand("git add .")
 		res = ExecCommand("git commit -m " + gConfig.commitPrefix + time.Now().Format("2006_01_02#15:04:05"))
-		// res = ExecCommand("git pull")
-		res = ExecCommand("git push -u origin " + gConfig.localBranchName + " --force")
+		res = ExecCommand("git push -u origin " + *remoteBranchName + " " + gConfig.localBranchName + " --force")
 		tc.StopTicker()
 	}
 	fmt.Println("Local files have connected with your git store, just edit it!")

@@ -18,7 +18,11 @@ func ReadGitConfig(gConfig *GitConfig) bool {
 	}
 	lines := strings.Split(string(bs[:]), "\n")
 	for _, line := range lines {
-		if strings.TrimSpace(line) == "" {
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		if strings.HasPrefix(line, "#") {
 			continue
 		}
 		kv := strings.Split(line, "=")
@@ -35,10 +39,23 @@ func ReadGitConfig(gConfig *GitConfig) bool {
 	gConfig.gitUsername = configMapTmp["git_username"]
 	gConfig.gitPassword = configMapTmp["git_password"]
 	gConfig.gitUserEmail = configMapTmp["git_useremail"]
+
+	gConfig.forceRecover = configMapTmp["force_recover"]
+
 	if configMapTmp["local_branch_name"] == "" {
-		gConfig.localBranchName = "main"
+		gConfig.localBranchName = "master"
+		if configMapTmp["remote_branch_name"] != "" {
+			gConfig.remoteBranchName = configMapTmp["remote_branch_name"]
+		} else {
+			gConfig.remoteBranchName = "master"
+		}
 	} else {
 		gConfig.localBranchName = configMapTmp["local_branch_name"]
+		if configMapTmp["remote_branch_name"] != "" {
+			gConfig.remoteBranchName = configMapTmp["remote_branch_name"]
+		} else {
+			gConfig.remoteBranchName = configMapTmp["local_branch_name"]
+		}
 	}
 
 	if gConfig.remoteStoreAddress == "" {

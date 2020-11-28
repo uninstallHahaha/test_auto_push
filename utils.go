@@ -1,8 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -49,4 +53,46 @@ func (t TickerController) StartTicker() {
 func (t TickerController) StopTicker() {
 	fmt.Println("Done")
 	t.ticker.Stop()
+}
+
+// UpdateConfigFile : provide new value for config field, update the git_config file
+// field : the field would like to be updated
+// value : the new value of field
+func UpdateConfigFile(field string, value string) {
+	var tmpStr string
+	fs, err := os.Open("./git_config.properties")
+	if err != nil {
+		fmt.Printf("open config file failed : %v\n", err)
+		return
+	}
+	defer fs.Close()
+
+	reader := bufio.NewReader(fs)
+	for {
+		line, err := reader.ReadString('\n')
+		if err == io.EOF {
+			if len(line) != 0 {
+				if strings.HasPrefix(strings.TrimSpace(line), field) {
+					tmpStr += field + " = " + value + "\n"
+				} else {
+					tmpStr += line
+				}
+			}
+			break
+		}
+		if err != nil {
+			fmt.Println("read file failed, err:", err)
+			return
+		}
+		if strings.HasPrefix(strings.TrimSpace(line), field) {
+			tmpStr += field + " = " + value + "\n"
+			continue
+		}
+		tmpStr += line
+	}
+	err = ioutil.WriteFile("./git_config.properties", []byte(tmpStr), 666)
+	if err != nil {
+		fmt.Printf("rewrite config file failed : %v\n", err)
+		return
+	}
 }
