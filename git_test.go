@@ -31,3 +31,8 @@ func TestAllBranchs(t *testing.T) {
 func TestUpdateConfigFile(t *testing.T) {
 	UpdateConfigFile("local_branch_name", "vlice")
 }
+
+func TestNoBranch(t *testing.T) {
+	res := ExecCommand("git branch --set-upstream-to=origin/master master")
+	fmt.Println(res)
+}

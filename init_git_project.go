@@ -94,9 +94,14 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 		tc := TickerController{ticker: time.NewTicker(time.Second)}
 		go tc.StartTicker()
 		res = ExecCommand("git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName)
+		if res == "exit status 128" {
+			ExecCommand("git branch " + gConfig.localBranchName)
+			ExecCommand("git checkout " + gConfig.localBranchName)
+			ExecCommand("git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName)
+		}
 		res = ExecCommand("git add .")
 		res = ExecCommand("git commit -m " + gConfig.commitPrefix + time.Now().Format("2006_01_02#15:04:05"))
-		res = ExecCommand("git push -u origin " + *remoteBranchName + " " + gConfig.localBranchName + " --force")
+		res = ExecCommand("git push -u origin " + gConfig.localBranchName + ":" + gConfig.remoteBranchName + " --force")
 		tc.StopTicker()
 	}
 	fmt.Println("Local files have connected with your git store, just edit it!")
