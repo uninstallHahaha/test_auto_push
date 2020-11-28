@@ -33,6 +33,6 @@ func TestUpdateConfigFile(t *testing.T) {
 }
 
 func TestNoBranch(t *testing.T) {
-	res := ExecCommand("git branch --set-upstream-to=origin/master master")
+	res := ExecCommand("git branch --set-upstream-to=origin/lll lll")
 	fmt.Println(res)
 }

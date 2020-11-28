@@ -82,11 +82,12 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 			}
 		}
 		// push local repository to remote
-		fmt.Println(">>>[git push -u origin " + *remoteBranchName + " " + gConfig.localBranchName + " --force]")
-		res = ExecCommand("git push -u origin " + *remoteBranchName + " " + gConfig.localBranchName + " --force")
+		fmt.Println(">>>[git push -u origin " + gConfig.localBranchName + ":" + *remoteBranchName + " --force]")
+		res = ExecCommand("git push -u origin " + gConfig.localBranchName + ":" + *remoteBranchName + " --force")
 		// bind local branch with remote branch
 		fmt.Println(">>>[git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName + "]")
 		res = ExecCommand("git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName)
+
 		fmt.Println("Initing git project is done, now your local files is connecting with your git store")
 	} else {
 		//For the case: user does not start saveMan, and he change his file, when he starts saveMan, we should git push to sync files
@@ -97,11 +98,11 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 		if res == "exit status 128" {
 			ExecCommand("git branch " + gConfig.localBranchName)
 			ExecCommand("git checkout " + gConfig.localBranchName)
-			ExecCommand("git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName)
 		}
 		res = ExecCommand("git add .")
 		res = ExecCommand("git commit -m " + gConfig.commitPrefix + time.Now().Format("2006_01_02#15:04:05"))
 		res = ExecCommand("git push -u origin " + gConfig.localBranchName + ":" + gConfig.remoteBranchName + " --force")
+		ExecCommand("git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName)
 		tc.StopTicker()
 	}
 	fmt.Println("Local files have connected with your git store, just edit it!")
