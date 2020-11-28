@@ -2,15 +2,17 @@ package main
 
 // GitConfig ...
 type GitConfig struct {
-	localBranchName    string
-	remoteBranchName   string
-	
-	commitPrefix       string
+	localBranchName  string
+	remoteBranchName string
+
 	remoteStoreAddress string
-	saveDuration       int
-	gitUsername        string
-	gitPassword        string
-	gitUserEmail       string
+
+	commitPrefix string
+	saveDuration int
+
+	gitUsername  string
+	gitPassword  string
+	gitUserEmail string
 
 	forceRecover string
 }
