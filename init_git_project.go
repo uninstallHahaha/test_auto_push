@@ -93,6 +93,7 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 		fmt.Print("sync with cloud data")
 		tc := TickerController{ticker: time.NewTicker(time.Second)}
 		go tc.StartTicker()
+		res = ExecCommand("git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName)
 		res = ExecCommand("git add .")
 		res = ExecCommand("git commit -m " + gConfig.commitPrefix + time.Now().Format("2006_01_02#15:04:05"))
 		res = ExecCommand("git push -u origin " + *remoteBranchName + " " + gConfig.localBranchName + " --force")
