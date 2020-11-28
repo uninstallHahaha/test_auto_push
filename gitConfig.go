@@ -4,6 +4,7 @@ package main
 type GitConfig struct {
 	localBranchName    string
 	remoteBranchName   string
+	
 	commitPrefix       string
 	remoteStoreAddress string
 	saveDuration       int
