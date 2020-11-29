@@ -52,18 +52,18 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 		// add remote address
 		fmt.Println(">>>[git remote add origin " + gConfig.remoteStoreAddress + "]")
 		res = ExecCommand("git remote add origin " + gConfig.remoteStoreAddress)
-		// add local branch
-		fmt.Println(">>>[git branch " + gConfig.localBranchName + "]")
-		res = ExecCommand("git branch " + gConfig.localBranchName)
-		// switch to local branch
-		fmt.Println(">>>[git checkout " + gConfig.localBranchName + "]")
-		res = ExecCommand("git checkout " + gConfig.localBranchName)
 		// add work file to index
 		fmt.Println(">>>[git add .]")
 		res = ExecCommand("git add .")
 		// add index to local repository
 		fmt.Println(">>>[git commit -m " + gConfig.commitPrefix + time.Now().Format("2006_01_02#15:04:05") + "]")
 		res = ExecCommand("git commit -m " + gConfig.commitPrefix + time.Now().Format("2006_01_02#15:04:05"))
+		// add local branch
+		fmt.Println(">>>[git branch " + gConfig.localBranchName + "]")
+		res = ExecCommand("git branch " + gConfig.localBranchName)
+		// switch to local branch
+		fmt.Println(">>>[git checkout " + gConfig.localBranchName + "]")
+		res = ExecCommand("git checkout " + gConfig.localBranchName)
 		// get remote branchs
 		fmt.Println(">>>[git fetch]")
 		res = ExecCommand("git fetch")
