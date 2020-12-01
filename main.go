@@ -89,7 +89,7 @@ func startMonitor() {
 						ExecCommand("git push --force")
 						taskKey = 0
 						fmt.Println(">>>[push success]")
-						fmt.Println("Waiting for your next edit...")
+						fmt.Println("😏 Waiting for your next edit...")
 					}
 				}(taskKey)
 			case err := <-watcher.Errors:
