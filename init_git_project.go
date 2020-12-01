@@ -105,5 +105,5 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 		ExecCommand("git branch --set-upstream-to=origin/" + *remoteBranchName + " " + gConfig.localBranchName)
 		tc.StopTicker()
 	}
-	fmt.Println("😏 Local files have connected with your git store, just edit it!")
+	fmt.Println("Local files have connected with your git store, just edit it!")
 }
