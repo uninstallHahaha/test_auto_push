@@ -37,7 +37,7 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 	res = ExecCommand("git status")
 	tc.StopTicker()
 
-	//init git ignore file
+	//init git ignore file if not exists
 	if !PathIsExists(".gitignore") {
 		res = ExecCommand("type nul>.gitignore")
 		ignoreStr := "APP_saveMan.exe\ngit_config.properties\nlogs\n.gitignore\nnode_modules\n"

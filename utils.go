@@ -112,10 +112,14 @@ func PathIsExists(path string) bool {
 // Log : print log, return error if there is error
 func Log(basePath string, logContent string) error {
 
-	logPath := path.Join(basePath, "logs",
-		strconv.Itoa(time.Now().Year()),
-		time.Now().Month().String(),
-		strconv.Itoa(time.Now().Day()))
+	prePath := basePath
+	logPath := ""
+	if strings.TrimSpace(basePath) == "" {
+		prePath = "logs"
+	}
+	logPath = path.Join(prePath,
+		strconv.Itoa(time.Now().Year())+strconv.Itoa(int(time.Now().Month()))+strconv.Itoa(time.Now().Day()))
+
 	if !PathIsExists(logPath) {
 		err := os.MkdirAll(logPath, os.ModePerm)
 		if err != nil {
