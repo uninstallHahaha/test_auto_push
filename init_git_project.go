@@ -12,7 +12,7 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 
 	//init user info
 	fmt.Print("Initing git user info.")
-	Log("", "testLog...")
+	Log("", "Initing git user info.")
 	tc1 := TickerController{ticker: time.NewTicker(time.Second)}
 	go tc1.StartTicker()
 	tc1.StopTicker()
