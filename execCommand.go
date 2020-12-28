@@ -29,4 +29,4 @@ func ExecCommand(command string) (res string) {
 	}
 	res = out.String()
 	return
-}
+} 
