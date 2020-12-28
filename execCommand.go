@@ -11,7 +11,7 @@ import (
 func ExecCommand(command string) (res string) {
 	//to log
 	Log(gConfig.logdir, ">>>["+command+"]")
-	fmt.Println(">>>["+command+"]")
+	// fmt.Println(">>>["+command+"]")
 
 	//spilt command
 	cList := strings.Split(command, " ")
