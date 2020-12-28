@@ -19,7 +19,7 @@ func main() {
 	//auto init git project
 	if !ReadGitConfig(&gConfig) {
 		return
-	}
+	} 
 
 	//init git project
 	InitGitPro(gConfig, &gConfig.remoteBranchName)

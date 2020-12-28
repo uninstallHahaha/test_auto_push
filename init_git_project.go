@@ -27,7 +27,7 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 	if gConfig.gitUserEmail != "" {
 		ExecCommand("git config --global user.email \"" + gConfig.gitUserEmail + "\"")
 		fmt.Println(">>>[git config email]")
-	}
+	} 
 
 	//init git project
 	fmt.Print("Initing git project.")

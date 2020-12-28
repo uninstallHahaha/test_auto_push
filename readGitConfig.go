@@ -40,7 +40,7 @@ func ReadGitConfig(gConfig *GitConfig) bool {
 	gConfig.gitPassword = configMapTmp["git_password"]
 	gConfig.gitUserEmail = configMapTmp["git_useremail"]
 
-	gConfig.logdir = configMapTmp["logdir"]
+	gConfig.logdir = configMapTmp["logdir"] 
 
 	gConfig.forceRecover = configMapTmp["force_recover"]
 

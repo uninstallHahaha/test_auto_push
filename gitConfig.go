@@ -1,7 +1,7 @@
 package main
 
 // GitConfig ...
-type GitConfig struct {
+type GitConfig struct { 
 	localBranchName  string
 	remoteBranchName string
 
