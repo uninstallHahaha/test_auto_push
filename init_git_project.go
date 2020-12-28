@@ -40,7 +40,7 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 	//init git ignore file
 	if !PathIsExists(".gitignore") {
 		res = ExecCommand("type nul>.gitignore")
-		ignoreStr := "APP_saveMan.exe\ngit_config.properties\nlogs"
+		ignoreStr := "APP_saveMan.exe\ngit_config.properties\nlogs\n.gitignore\nnode_modules\n"
 		err := ioutil.WriteFile(".gitignore", []byte(ignoreStr), 0x666)
 		if err != nil {
 			fmt.Printf("generate ignore file failed : %v\n", err)
