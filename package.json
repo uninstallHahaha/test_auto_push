@@ -1,0 +1,28 @@
+{
+  "name": "saveman",
+  "version": "1.5.0",
+  "description": "this is a tool to help you sync the local file with your git repository automatically.",
+  "main": "App_saveMan.exe",
+  "scripts": {
+    "test": "App_saveMan.exe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uninstallHahaha/test_auto_push.git"
+  },
+  "keywords": [
+    "automatic",
+    "sync",
+    "file",
+    "map",
+    "file",
+    "with",
+    "cloud"
+  ],
+  "author": "alice",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uninstallHahaha/test_auto_push/issues"
+  },
+  "homepage": "https://github.com/uninstallHahaha/test_auto_push#readme"
+}

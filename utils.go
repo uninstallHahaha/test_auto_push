@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
+	"path"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -95,4 +98,32 @@ func UpdateConfigFile(field string, value string) {
 		fmt.Printf("rewrite config file failed : %v\n", err)
 		return
 	}
+}
+
+// Log : print log, return error if there is error
+func Log(basePath string, logContent string) error {
+
+	logPath := path.Join(basePath, "logs",
+		strconv.Itoa(time.Now().Year()),
+		time.Now().Month().String(),
+		strconv.Itoa(time.Now().Day()))
+	_, err := os.Stat(logPath)
+	if err == nil || os.IsExist(err) {
+	} else {
+		err = os.MkdirAll(logPath, os.ModePerm)
+		if err != nil {
+			return err
+		}
+	}
+
+	file, err := os.OpenFile(path.Join(logPath, "data.log"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, os.ModePerm)
+	defer file.Close()
+	if err != nil {
+		return err
+	}
+
+	logger := log.New(file, "", log.LstdFlags)
+	logger.Println(logContent)
+
+	return nil
 }

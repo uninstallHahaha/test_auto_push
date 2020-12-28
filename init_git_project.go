@@ -12,6 +12,7 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 
 	//init user info
 	fmt.Print("Initing git user info.")
+	Log("", "testLog...")
 	tc1 := TickerController{ticker: time.NewTicker(time.Second)}
 	go tc1.StartTicker()
 	tc1.StopTicker()
@@ -40,7 +41,7 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 	if strings.TrimSpace(res) == "exit status 128" {
 		//init git ignore file
 		res = ExecCommand("type nul>.gitignore")
-		ignoreStr := "APP_saveMan.exe\ngit_config.properties"
+		ignoreStr := "APP_saveMan.exe\ngit_config.properties\nlogs"
 		err := ioutil.WriteFile(".gitignore", []byte(ignoreStr), 0x666)
 		if err != nil {
 			fmt.Printf("generate ignore file failed : %v\n", err)
