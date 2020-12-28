@@ -100,6 +100,15 @@ func UpdateConfigFile(field string, value string) {
 	}
 }
 
+// PathIsExists : return the path whether exists.
+func PathIsExists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil || os.IsExist(err) {
+		return true
+	}
+	return false
+}
+
 // Log : print log, return error if there is error
 func Log(basePath string, logContent string) error {
 
@@ -107,10 +116,8 @@ func Log(basePath string, logContent string) error {
 		strconv.Itoa(time.Now().Year()),
 		time.Now().Month().String(),
 		strconv.Itoa(time.Now().Day()))
-	_, err := os.Stat(logPath)
-	if err == nil || os.IsExist(err) {
-	} else {
-		err = os.MkdirAll(logPath, os.ModePerm)
+	if !PathIsExists(logPath) {
+		err := os.MkdirAll(logPath, os.ModePerm)
 		if err != nil {
 			return err
 		}

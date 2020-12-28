@@ -37,9 +37,8 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 	res = ExecCommand("git status")
 	tc.StopTicker()
 
-	//did not init git project
-	if strings.TrimSpace(res) == "exit status 128" {
-		//init git ignore file
+	//init git ignore file
+	if !PathIsExists(".gitignore") {
 		res = ExecCommand("type nul>.gitignore")
 		ignoreStr := "APP_saveMan.exe\ngit_config.properties\nlogs"
 		err := ioutil.WriteFile(".gitignore", []byte(ignoreStr), 0x666)
@@ -47,6 +46,10 @@ func InitGitPro(gConfig GitConfig, remoteBranchName *string) {
 			fmt.Printf("generate ignore file failed : %v\n", err)
 			return
 		}
+	}
+
+	//did not init git project
+	if strings.TrimSpace(res) == "exit status 128" {
 		//init git project
 		fmt.Println(">>>[git init]")
 		res = ExecCommand("git init")
