@@ -2,12 +2,17 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"os/exec"
 	"strings"
 )
 
 //ExecCommand ...
 func ExecCommand(command string) (res string) {
+	//to log
+	Log(gConfig.logdir, ">>>["+command+"]")
+	fmt.Println(">>>["+command+"]")
+
 	//spilt command
 	cList := strings.Split(command, " ")
 	cmd := exec.Command(cList[0], cList[1:]...)

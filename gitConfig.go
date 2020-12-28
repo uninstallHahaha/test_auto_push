@@ -15,4 +15,6 @@ type GitConfig struct {
 	gitUserEmail string
 
 	forceRecover string
+
+	logdir string
 }
