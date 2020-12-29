@@ -40,8 +40,9 @@ func watchDir(path string, fi os.FileInfo, err error) error {
 	if strings.HasPrefix(path, ".git") ||
 		strings.HasPrefix(path, "APP_saveMan") ||
 		strings.HasPrefix(path, "git_config") ||
-		strings.HasPrefix(path, "logs")||
+		strings.HasPrefix(path, "logs") ||
 		strings.HasPrefix(path, "node_modules") {
+
 		return nil
 	}
 	// fmt.Println(path)
@@ -84,7 +85,7 @@ func startMonitor() {
 				var timer = time.NewTimer(time.Second * time.Duration(gConfig.saveDuration))
 				rand.Seed(time.Now().UnixNano())
 				taskKey = rand.Int() //本次任务的key
-				go func(key int) { 
+				go func(key int) {
 					<-timer.C
 					if key == taskKey {
 						ExecCommand("git checkout " + gConfig.localBranchName)
