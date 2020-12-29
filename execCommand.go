@@ -25,8 +25,9 @@ func ExecCommand(command string) (res string) {
 	if err != nil {
 		// fmt.Printf("run failed : %v, stderr: %v\n", err, stderr.String())
 		res = err.Error()
+		Log(gConfig.logdir, "error: "+res)
 		return
 	}
 	res = out.String()
 	return
-} 
+}

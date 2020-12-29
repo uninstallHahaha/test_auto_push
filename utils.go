@@ -109,7 +109,7 @@ func PathIsExists(path string) bool {
 	return false
 }
 
-// Log : print log, return error if there is error
+// Log : print log, return error if there is error 
 func Log(basePath string, logContent string) error {
 
 	prePath := basePath
