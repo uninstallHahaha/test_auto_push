@@ -23,7 +23,7 @@ func ExecCommand(command string) (res string) {
 	//run command
 	err := cmd.Run()
 	if err != nil {
-		Log(gConfig.logdir, "cmd run error: "+res)
+		// Log(gConfig.logdir, "cmd run error: "+res)
 		TryToResolve(out.String())
 	}
 	res = out.String()
