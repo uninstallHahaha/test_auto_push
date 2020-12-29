@@ -42,7 +42,6 @@ func watchDir(path string, fi os.FileInfo, err error) error {
 		strings.HasPrefix(path, "git_config") ||
 		strings.HasPrefix(path, "logs") ||
 		strings.HasPrefix(path, "node_modules") {
-
 		return nil
 	}
 	// fmt.Println(path)
