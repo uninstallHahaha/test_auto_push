@@ -37,7 +37,11 @@ var watcher *fsnotify.Watcher
 
 //add file path to watcher
 func watchDir(path string, fi os.FileInfo, err error) error {
-	if strings.HasPrefix(path, ".git") || strings.HasPrefix(path, "APP_saveMan") || strings.HasPrefix(path, "git_config") {
+	if strings.HasPrefix(path, ".git") ||
+		strings.HasPrefix(path, "APP_saveMan") ||
+		strings.HasPrefix(path, "git_config") ||
+		strings.HasPrefix(path, "logs")||
+		strings.HasPrefix(path, "node_modules") {
 		return nil
 	}
 	// fmt.Println(path)

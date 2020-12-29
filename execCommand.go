@@ -17,16 +17,14 @@ func ExecCommand(command string) (res string) {
 	cmd := exec.Command(cList[0], cList[1:]...)
 	//set out buffer and err buffer
 	var out bytes.Buffer
-	var stderr bytes.Buffer
+	// var stderr bytes.Buffer
 	cmd.Stdout = &out
-	cmd.Stderr = &stderr
+	cmd.Stderr = &out
 	//run command
 	err := cmd.Run()
 	if err != nil {
-		// fmt.Printf("run failed : %v, stderr: %v\n", err, stderr.String())
-		res = err.Error()
-		Log(gConfig.logdir, "error: "+res)
-		return
+		Log(gConfig.logdir, "cmd run error: "+res)
+		TryToResolve(out.String())
 	}
 	res = out.String()
 	return

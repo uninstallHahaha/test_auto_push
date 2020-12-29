@@ -1,3 +1,5 @@
 APP_saveMan.exe
 git_config.properties
 logs
+.gitignore
+node_modules
