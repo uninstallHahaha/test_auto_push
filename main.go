@@ -12,7 +12,7 @@ import (
 	_ "github.com/uninstallHahaha/deamon"
 )
 
-// go build -ldflags “-H=windowsgui”
+// go build -ldflags "-H=windowsgui"
 
 //git config
 var gConfig = GitConfig{}
