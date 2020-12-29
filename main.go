@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/fsnotify"
-	_ "github.com/uninstallHahaha/deamon"
+	// _ "github.com/uninstallHahaha/deamon"
 )
 
 // go build -ldflags "-H=windowsgui"
@@ -27,8 +27,8 @@ func main() {
 	//init git project
 	InitGitPro(gConfig, &gConfig.remoteBranchName)
 
-	//start file change monitor
-	startMonitor()
+	// //start file change monitor
+	// startMonitor()
 
 }
 
