@@ -22,5 +22,8 @@ func TryToResolve(out string) string {
 		return resolveRes
 	}
 
+	//there is no resolve plan to resolve this problem
+	Log("", "Sorry, this is not a problem.")
+
 	return ""
 }
